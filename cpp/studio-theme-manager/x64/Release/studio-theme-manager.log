@@ -1,0 +1,9 @@
+﻿  injector.cpp
+  studio-theme-manager.cpp
+C:\Users\chris\Documents\GitHub\studio-theme-manager\cpp\studio-theme-manager\studio-theme-manager.cpp(11,98): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
+  Generating code
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+C:\Users\chris\Documents\GitHub\studio-theme-manager\cpp\studio-theme-manager\util.h(33): warning C4172: returning address of local variable or temporary: buf
+  All 337 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  studio-theme-manager.vcxproj -> C:\Users\chris\Documents\GitHub\studio-theme-manager\cpp\x64\Release\studio-theme-manager.exe
