@@ -1,44 +1,35 @@
-#include "pch.h"
+#include "includes.h"
+#include "injector.h"
 
-class Injector {
-public:
-    Injector() {};
+DWORD Injector::get_process_id(std::string_view name) const {
+    const auto snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
+    PROCESSENTRY32 entry;
+    entry.dwSize = sizeof(PROCESSENTRY32);
 
-    void inject(const char* process_name, const char* dll_path) {
-        DWORD process_id = 0;
-        while (process_id == 0) {
-            process_id = get_process_id(process_name);
-            Sleep(10);
-        }
-
-        HANDLE process = OpenProcess(PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_CREATE_THREAD, 0, process_id);
-        LPVOID remote = VirtualAllocEx(process, NULL, strlen(dll_path) + 1, MEM_COMMIT, PAGE_READWRITE);
-        LPVOID load_lib = GetProcAddress(LoadLibraryA("kernel32.dll"), "LoadLibraryA");
-
-        WriteProcessMemory(process, remote, dll_path, strlen(dll_path) + 1, 0);
-        CreateRemoteThread(process, NULL, NULL, (LPTHREAD_START_ROUTINE)load_lib, remote, NULL, NULL);
-    }
-
-private:
-    DWORD get_process_id(const char* name) {
-        HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
-        PROCESSENTRY32 entry;
-        entry.dwSize = sizeof(PROCESSENTRY32);
-
-        char buf[MAX_PATH] = { 0 };
-        size_t chars = 0;
-
-        if (Process32First(snapshot, &entry) == TRUE)
+    if (Process32First(snapshot, &entry) == true)
+    {
+        while (Process32Next(snapshot, &entry) == true)
         {
-            while (Process32Next(snapshot, &entry) == TRUE)
+            if (strcmp((char*)entry.szExeFile, name.data()) == 0)
             {
-                wcstombs_s(&chars, buf, entry.szExeFile, MAX_PATH);
-                if (_stricmp(buf, name) == 0)
-                {
-                    return entry.th32ProcessID;
-                }
+                return entry.th32ProcessID;
             }
         }
-        return 0;
     }
-};
+    return 0;
+}
+
+void Injector::inject(std::string_view process_name, std::string_view dll_path) const {
+    auto process_id = 0;
+    while (process_id == 0) {
+        process_id = Injector::get_process_id(process_name);
+        Sleep(10);
+    }
+
+    const auto process = OpenProcess(PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_CREATE_THREAD, 0, process_id);
+    const auto remote = VirtualAllocEx(process, NULL, strlen(dll_path.data()) + 1, MEM_COMMIT, PAGE_READWRITE);
+    const auto load_lib = GetProcAddress(LoadLibraryA("kernel32.dll"), "LoadLibraryA");
+
+    WriteProcessMemory(process, remote, dll_path.data(), strlen(dll_path.data()) + 1, 0);
+    CreateRemoteThread(process, NULL, NULL, (LPTHREAD_START_ROUTINE)load_lib, remote, NULL, NULL);
+}

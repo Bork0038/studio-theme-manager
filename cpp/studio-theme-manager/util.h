@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "includes.h"
 
 namespace util
 {
@@ -14,10 +14,10 @@ namespace util
 	}
 
 	const char* path_to_char(std::filesystem::path path) {
-		return ((std::string)path.string()).c_str();
+		return (path.string()).c_str();
 	}
 
-	const char* get_studio_path() {
+	static const char* get_studio_path() {
 		HKEY key;
 		RegOpenKeyEx(HKEY_CLASSES_ROOT, L"roblox-studio\\DefaultIcon", 0, KEY_ALL_ACCESS, &key);
 
