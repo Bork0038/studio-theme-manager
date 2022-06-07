@@ -1,0 +1,41 @@
+﻿---
+# gonna try and like put da cpp style (maybe js also)
+# clang uses spaces then replaces indents with tabs
+IndentWidth: 4
+TabWidth: 4
+UseTab: 'Always'
+ColumnLimit: 0
+
+---
+Language: 'Cpp'
+
+# brace break and space hell
+BreakBeforeBraces: Allman
+
+SortUsingDeclarations: 'true'
+SpaceAfterCStyleCast: 'true'
+SpaceAfterLogicalNot: 'true'
+SpaceAfterTemplateKeyword: 'true'
+SpaceBeforeAssignmentOperators: 'true'
+SpaceBeforeCpp11BracedList: 'true'
+SpaceBeforeCtorInitializerColon: 'true'
+SpaceBeforeInheritanceColon: 'true'
+SpaceBeforeRangeBasedForLoopColon: 'true'
+SpaceInEmptyParentheses: 'true'
+SpacesInAngles: 'true'
+SpacesInCStyleCastParentheses: 'true'
+SpacesInContainerLiterals: 'true'
+SpacesInParentheses: 'true'
+SpacesInSquareBrackets: 'true'
+
+# short stuff
+
+# namespace indents
+NamespaceIndentation: 'All'
+
+# Force pointers to the type for C++.
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# sort includes
+---
