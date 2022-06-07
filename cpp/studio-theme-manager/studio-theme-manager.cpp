@@ -13,7 +13,6 @@ void updateRegistry(char * args) {
 
 int main(int argc, char* argv[])
 {
-    FreeConsole();
     std::string studio_path = util::get_studio_path();
 
     STARTUPINFOA startup;
@@ -41,10 +40,8 @@ int main(int argc, char* argv[])
         &process_information
     );
 
-    const char* dll_path = util::path_to_char(util::get_file("theme-hook.dll"));
-
-    Injector *injector = new Injector;
-    injector->inject("RobloxStudioBeta.exe", dll_path);
+    auto dll_path = util::get_file("theme-hook.dll").string();
+    Injector::inject("RobloxStudioBeta.exe", dll_path);
 
 
     WaitForSingleObject(process_information.hProcess, INFINITE);

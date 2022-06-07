@@ -13,10 +13,6 @@ namespace util
 		return get_base().append(name);
 	}
 
-	const char* path_to_char(std::filesystem::path path) {
-		return ((std::string)path.string()).c_str();
-	}
-
 	const char* get_studio_path() {
 		HKEY key;
 		RegOpenKeyEx(HKEY_CLASSES_ROOT, L"roblox-studio\\DefaultIcon", 0, KEY_ALL_ACCESS, &key);

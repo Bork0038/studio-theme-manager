@@ -1,25 +1,21 @@
 #include "pch.h"
 
-class Injector {
-public:
-    Injector() {};
-
-    void inject(const char* process_name, const char* dll_path) {
+namespace Injector {
+    void inject(const char* process_name, std::string_view dll_path) {
         DWORD process_id = 0;
         while (process_id == 0) {
             process_id = get_process_id(process_name);
             Sleep(10);
         }
-
+ 
         HANDLE process = OpenProcess(PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_CREATE_THREAD, 0, process_id);
-        LPVOID remote = VirtualAllocEx(process, NULL, strlen(dll_path) + 1, MEM_COMMIT, PAGE_READWRITE);
+        LPVOID remote = VirtualAllocEx(process, NULL, dll_path.size() + 1, MEM_COMMIT, PAGE_READWRITE);
         LPVOID load_lib = GetProcAddress(LoadLibraryA("kernel32.dll"), "LoadLibraryA");
 
-        WriteProcessMemory(process, remote, dll_path, strlen(dll_path) + 1, 0);
+        WriteProcessMemory(process, remote, dll_path.data(), dll_path.size() + 1, 0);
         CreateRemoteThread(process, NULL, NULL, (LPTHREAD_START_ROUTINE)load_lib, remote, NULL, NULL);
     }
 
-private:
     DWORD get_process_id(const char* name) {
         HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
         PROCESSENTRY32 entry;
