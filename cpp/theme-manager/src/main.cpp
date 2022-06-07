@@ -18,7 +18,6 @@ int main( int argc, char* argv[] )
 	std::string args { studio_path.string( ) }; // append to this
 
 	/*****/
-
 	STARTUPINFOA startup;
 	PROCESS_INFORMATION process_information;
 
@@ -36,7 +35,6 @@ int main( int argc, char* argv[] )
 		&startup,
 		&process_information 
 	);
-
 	/*****/
 
 	auto dll_path = utils::get_file( "theme-hook.dll" ).string( );

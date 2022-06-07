@@ -1,3 +1,0 @@
-﻿  studio-theme-manager.cpp
-C:\Users\chris\Documents\GitHub\studio-theme-managera\cpp\studio-theme-manager\injector.h(7,26): error C3861: 'get_process_id': identifier not found
-C:\Users\chris\Documents\GitHub\studio-theme-managera\cpp\studio-theme-manager\studio-theme-manager.cpp(11,98): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
