@@ -1,0 +1,105 @@
+#Home {
+    width: 100%;
+    height: calc(100% - 30px);
+}
+
+#Home-inner {
+    width: calc(100% - 30px);
+    height: 100%;
+    margin-left: 30px;
+}
+
+#Home-header {
+    width: calc(100% - 30px);
+    height: 40px;
+}
+
+#Home-header p {
+    padding-left: 10px;
+    font-size: 14px;
+    margin-top: 10px;
+    color: #BBBBBB;
+    user-select: none;
+}
+
+#Home-p1 {
+    width: 20%;
+    float: left;
+}
+
+#Home-p2 {
+    width: 60%;
+    float: left;
+}
+
+#Home-p3 {
+    width: 20%;
+    float: right;
+    text-align: center;
+}
+
+#Home-scroll {
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow-y: auto;
+}
+
+.Home-theme {
+    width: calc(100% - 30px);
+    height: 50px;
+    background-color: #16171B;
+    border: 1px rgba(255,255,255,0.03) solid;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.15);
+    margin-bottom: 10px;
+}
+
+.Home-theme p {
+    height: 100%;
+    line-height: 50px;
+    vertical-align: middle;
+    padding-left: 10px;
+    margin-top: 0px;
+    color: #BBBBBB;
+    user-select: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.Home-theme-name {
+    width: 20%;
+    float: left;
+    font-weight: bolder;
+}
+
+.Home-theme-file {
+    width: 60%;
+    float: left;
+}
+
+.Home-theme-check-wrapper {
+    height: 100%;
+    width: 20%;
+    float: right;
+}
+
+.Home-theme-check-inner {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    left: calc(50% + 10px);
+    transform: translate(-50%, 0%);
+}
+
+#Home-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+#Home-scroll::-webkit-scrollbar-track {
+    background: none;   
+}
+
+#Home-scroll::-webkit-scrollbar-thumb {
+    background-color: #202125;
+	border-radius: 3px;
+}

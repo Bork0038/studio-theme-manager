@@ -9,8 +9,11 @@ import closeIcon from '../public/close.png';
 import maxIcon from '../public/max.png';
 import minIcon from '../public/min.png';
 import Icon from '../public/icon.png';
+import Home from './pages/Home';
 
-import { Table, CustomProvider, Button, Checkbox } from 'rsuite';
+import { CustomProvider } from 'rsuite';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { EventEmitter } from "events";
 
 class App extends React.Component {
 	constructor(props) {		
@@ -23,6 +26,21 @@ class App extends React.Component {
 			},
             width: window.innerWidth,
 		}
+		window.manager = new EventEmitter();
+
+		
+		const socket = new WebSocket('ws://localhost:42772');
+		socket.addEventListener('open', () => {
+			this.send('setupClient', {});
+		})
+		socket.addEventListener('message', (event) => {
+			const data = JSON.parse(event.data);
+
+			window.manager.emit(data.op, data.data);
+		})
+
+		window.socket = socket;
+		
 
         window.addEventListener("resize", () => {
             clearTimeout(window.resizeFinished);
@@ -149,9 +167,11 @@ class App extends React.Component {
 						</div>
 					</div>
 					<div id='drag'></div>
-                    <div id="table-wrapper">
-                       
-                    </div>
+                    <Router>
+						<Routes>
+							<Route path="/" element={<Home />}/>
+						</Routes>
+					</Router>
 				</div>
             </CustomProvider>
 		);
