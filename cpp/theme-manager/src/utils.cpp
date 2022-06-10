@@ -7,7 +7,7 @@
 
 namespace fs = std::filesystem;
 
-std::filesystem::path utils::get_base( )
+fs::path utils::get_base( )
 {
 	wchar_t buf[ MAX_PATH ];
 	GetModuleFileNameW( NULL, buf, MAX_PATH );
@@ -15,7 +15,7 @@ std::filesystem::path utils::get_base( )
 	return std::filesystem::path { buf }.parent_path( ) / "";
 }
 
-std::filesystem::path utils::get_file( const char* name )
+fs::path utils::get_file( const char* name )
 {
 	return get_base( ).append( name );
 }
@@ -26,7 +26,7 @@ fs::path utils::get_studio_path( )
 	RegOpenKeyExA( HKEY_CLASSES_ROOT, "roblox-studio\\DefaultIcon", 0,
 				   KEY_ALL_ACCESS, &key );
 
-	char path[ MAX_PATH ];
+	char path[ MAX_PATH ] { };
 	DWORD size = MAX_PATH;
 	DWORD type = REG_SZ;
 
@@ -44,5 +44,5 @@ void utils::rbx_studio_open( const fs::path& exe_path )
 	// why tf does this work?
 	HKEY key;
 	RegOpenKeyExA( HKEY_CLASSES_ROOT, "roblox-studio\\shell\\open\\command", 0, KEY_ALL_ACCESS, &key );
-	RegSetValueExA( key, NULL, 0, REG_SZ, ( BYTE* ) path.string( ).c_str( ), path.string().size( ) + 1 );
+	RegSetValueExA( key, NULL, 0, REG_SZ, ( BYTE* ) path.string( ).c_str( ), path.string( ).size( ) + 1 );
 }

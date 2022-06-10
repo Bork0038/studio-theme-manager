@@ -2,32 +2,72 @@
 #include "utils.hpp"
 
 #include <Windows.h>
-#include <tlhelp32.h>
+#include <filesystem>
+#include <iostream>
 #include <string>
+#include <tlhelp32.h>
 
-void injector::inject( const std::string& process_name, const char* dll_path )
+namespace fs = std::filesystem;
+
+void injector::inject( const std::string& process_name, const fs::path& dll_path )
 {
+	if ( !fs::exists( dll_path ) )
+	{
+		std::cerr << "dll is not in current path!\n";
+		return;
+	}
+
 	DWORD process_id = 0;
 	while ( process_id == 0 )
 	{
-		process_id = get_process_id( process_name.c_str() );
+		process_id = get_process_id( process_name.c_str( ) );
 		Sleep( 10 );
 	}
 
+	std::cout << "pid: " << process_id << "\n";
+
 	HANDLE process = OpenProcess( PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_CREATE_THREAD, 0, process_id );
-	LPVOID remote = VirtualAllocEx( process, NULL, strlen( dll_path ) + 1, MEM_COMMIT, PAGE_READWRITE );
+
+	if ( !process )
+	{
+		std::cerr << GetLastError( ) << "\n";
+		return;
+	}
+
+	const auto& path = dll_path.string( );
+
+	// bro you wont be executed dumb ass
+	LPVOID remote = VirtualAllocEx( process, NULL, strlen( path.c_str( ) ) + 1, MEM_COMMIT, PAGE_READWRITE );
 	LPVOID load_lib = GetProcAddress( LoadLibraryA( "kernel32.dll" ), "LoadLibraryA" );
 
-	WriteProcessMemory( process, remote, dll_path, strlen( dll_path ) + 1, 0 );
+	WriteProcessMemory( process, remote, path.c_str( ), strlen( path.c_str( ) ) + 1, 0 );
 	CreateRemoteThread( process, NULL, NULL, ( LPTHREAD_START_ROUTINE ) load_lib, remote, NULL, NULL );
+
+	std::cerr << GetLastError( ) << "\n";
+
+	CloseHandle( process );
 }
 
+// no worky
 DWORD injector::get_process_id( const std::string& name )
 {
-	HWND window_handle = FindWindowA( NULL, name.c_str() );
+	PROCESSENTRY32 entry;
+	entry.dwSize = sizeof( PROCESSENTRY32 );
 
-	DWORD process_id;
-	GetWindowThreadProcessId( window_handle, &process_id );
+	HANDLE snapshot = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS, NULL );
 
-	return process_id;
+	if ( Process32First( snapshot, &entry ) == TRUE )
+	{
+		while ( Process32Next( snapshot, &entry ) == TRUE )
+		{
+			if ( stricmp( entry.szExeFile, name.c_str( ) ) == 0 )
+			{
+				CloseHandle( snapshot );
+				return entry.th32ProcessID;
+			}
+		}
+	}
+
+	CloseHandle( snapshot );
+	return 0;
 }
