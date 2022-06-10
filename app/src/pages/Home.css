@@ -103,3 +103,39 @@
     background-color: #202125;
 	border-radius: 3px;
 }
+
+#Darken {
+    width: 100%;
+    height: calc(100% - 30px);
+    position: absolute;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 2;
+}
+
+#Loading-wrapper {
+    width: 300px;
+    height: 100px;
+    position: relative;
+    top: calc(50% - 30px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #16171B;
+    border: 1px rgba(255,255,255,0.03) solid;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.15);
+    border-radius: 3px;
+}
+
+#Loading-progress-wrapper {
+    width: calc(100% - 40px);
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+#Loading-text {
+    width: 100%;
+    text-align: center;
+    padding-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    user-select: none;
+}

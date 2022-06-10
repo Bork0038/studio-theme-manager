@@ -9,7 +9,9 @@ import closeIcon from '../public/close.png';
 import maxIcon from '../public/max.png';
 import minIcon from '../public/min.png';
 import Icon from '../public/icon.png';
+
 import Home from './pages/Home';
+import Editor from './pages/Editor';
 
 import { CustomProvider } from 'rsuite';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -52,6 +54,7 @@ class App extends React.Component {
             }, 200)
         })
 
+		this.openThemeEditor = this.openThemeEditor.bind(this);
         this.handleClick     = this.handleClick.bind(this);
 		this.minimize        = this.minimize.bind(this);
 		this.maximize        = this.maximize.bind(this);
@@ -133,17 +136,25 @@ class App extends React.Component {
 		}
     }
 
+	openThemeEditor() {
+		window.socket.send(JSON.stringify({
+			op: "openThemeEditor",
+			data: {}
+		}))
+		this.state.openTab.style.visibility = 'hidden';
+		this.setState({
+			openTab: null
+		})
+		this.openRef = null;
+	}
+
     render() {
 		return (
 			<CustomProvider theme="dark" className="App">
 				<div id="Wrapper">
 					<div id="tabs">
 						<div id='file-tab' ref={this.state.refs.files}>
-							<button class='tab-entry' onClick={this.openFile}>
-								<p class='tab-title'>Open Theme</p>
-								<p class='tab-keybind'>Ctrl + O</p>
-							</button>
-							<button class='tab-entry' onClick={this.openFile}>
+							<button class='tab-entry' onClick={this.openThemeEditor}>
 								<p class='tab-title'>Theme Editor</p>
 							</button>
 						</div>
@@ -170,6 +181,7 @@ class App extends React.Component {
                     <Router>
 						<Routes>
 							<Route path="/" element={<Home />}/>
+							<Route path="/editor" element={<Editor />}/>
 						</Routes>
 					</Router>
 				</div>

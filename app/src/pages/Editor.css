@@ -1,0 +1,50 @@
+#Editor {
+    width: 100%;
+    height: calc(100% - 30px)
+}
+
+#home-wrapper {
+    height: 100%;
+    width: 100%;
+    background-color: #141519
+}
+
+#explorer-wrapper {
+    width: 200px;
+    height: 100%;
+    border-right: #333436 1px solid;
+    padding-top: 6px;
+}
+
+
+#top-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex
+}
+
+#bottom-wrapper {
+    height: 45px;
+    width: 100%;
+    background: none;
+}
+
+#editor-wrapper {
+    width: calc(100% - 200px);
+    height: 100%;
+}
+
+
+#explorer-wrapper ul {
+	margin-left: 10px;
+	width: calc(100% - 10px);
+}
+
+ul, li, li div {
+	background: none !important;
+}
+
+#unsaved-bullet {
+    position: relative;
+    right: 0px;
+}

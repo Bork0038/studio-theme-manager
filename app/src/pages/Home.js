@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Checkbox } from "rsuite";
+import { Checkbox, Progress } from "rsuite";
 
 import "./Home.css";
 
@@ -10,14 +10,29 @@ class Home extends React.Component {
 
         this.state = {
             themes: [],
+            loading: false,
+            steps: 0,
+            totalSteps: 1
         }
 
         window.manager.on("updateThemes", themes => this.setState({ themes }));
+        window.manager.on("step", data => this.setState(data));
+        window.manager.on("loaded", () => this.setState({ loading: false, steps: 0 }));
     }
 
     render() {
         return (
             <div id="Home">
+                {
+                    this.state.loading ? <div id="Darken"> 
+                        <div id="Loading-wrapper">
+                            <p id="Loading-text">Applying Theme...</p>
+                            <div id="Loading-progress-wrapper">
+                               <Progress.Line percent={(this.state.steps / this.state.totalSteps * 100).toFixed()} />
+                            </div>
+                        </div>
+                    </div> : ""
+                }
                 <div id="Home-inner">
                     <div id="Home-header">
                         <p id="Home-p1">Theme Name</p>
@@ -54,7 +69,11 @@ class Home extends React.Component {
                                                                 }
                                                             }
     
-                                                            this.setState({ themes, current: val.path, loading: true });
+                                                            window.socket.send(JSON.stringify({
+                                                                op: "setTheme",
+                                                                data: val.data
+                                                            }))
+                                                            this.setState({ themes, current: val.path, loading: true });                                                 
                                                         }
                                                     }
                                                 }

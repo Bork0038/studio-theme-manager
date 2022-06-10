@@ -3,17 +3,23 @@ lockfileVersion: 5.3
 specifiers:
   electron: ^19.0.3
   express: ^4.18.1
+  hound: ^1.0.5
   i: ^0.3.7
   pnpm: ^7.1.9
   regedit: 5.0.0
+  uuid: ^8.3.2
+  windows-shortcuts: ^0.1.6
   ws: ^8.7.0
 
 dependencies:
   electron: 19.0.3
   express: 4.18.1
+  hound: 1.0.5
   i: 0.3.7
   pnpm: 7.1.9
   regedit: 5.0.0
+  uuid: 8.3.2
+  windows-shortcuts: 0.1.6
   ws: 8.7.0
 
 packages:
@@ -460,6 +466,11 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       function-bind: 1.1.1
+    dev: false
+
+  /hound/1.0.5:
+    resolution: {integrity: sha512-XlR+pqWj9BeiHQUS03HX9Pnb32+pgbrFxoSYhl+atrs25GHIrZU4gvKe426pJripJWZFCkvZv6aLTzZvas0Tug==}
+    engines: {node: '>=0.7.1'}
     dev: false
 
   /http-cache-semantics/4.1.0:
@@ -986,9 +997,18 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: false
 
+  /uuid/8.3.2:
+    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
+    dev: false
+
   /vary/1.1.2:
     resolution: {integrity: sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=}
     engines: {node: '>= 0.8'}
+    dev: false
+
+  /windows-shortcuts/0.1.6:
+    resolution: {integrity: sha1-J5cMXDRv/YGCHD4SUowLq8oKWpk=}
     dev: false
 
   /wrappy/1.0.2:
