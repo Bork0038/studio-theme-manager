@@ -1,6 +1,7 @@
 #Home {
     width: 100%;
     height: calc(100% - 30px);
+    margin-top: 30px;
 }
 
 #Home-inner {
@@ -47,7 +48,7 @@
 .Home-theme {
     width: calc(100% - 30px);
     height: 50px;
-    background-color: #16171B;
+    background-color: #141518;
     border: 1px rgba(255,255,255,0.03) solid;
     box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.15);
     margin-bottom: 10px;
@@ -119,7 +120,7 @@
     top: calc(50% - 30px);
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #16171B;
+    background-color: #16171A;
     border: 1px rgba(255,255,255,0.03) solid;
     box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.15);
     border-radius: 3px;

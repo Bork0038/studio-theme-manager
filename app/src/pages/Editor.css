@@ -1,12 +1,14 @@
 #Editor {
     width: 100%;
-    height: calc(100% - 30px)
+    height: calc(100% - 30px);
+    margin-top: 30px;
+    background-color: #16171A;
 }
 
 #home-wrapper {
     height: 100%;
     width: 100%;
-    background-color: #141519
+    background-color: #16171A
 }
 
 #explorer-wrapper {

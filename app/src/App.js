@@ -30,17 +30,17 @@ class App extends React.Component {
 		}
 		window.manager = new EventEmitter();
 
-		
+		const params = new URLSearchParams(window.location.search);
 		const socket = new WebSocket('ws://localhost:42772');
 		socket.addEventListener('open', () => {
-			this.send('setupClient', {});
+			this.send('identifyWindow', params.get("id"));
 		})
+
 		socket.addEventListener('message', (event) => {
 			const data = JSON.parse(event.data);
 
 			window.manager.emit(data.op, data.data);
 		})
-
 		window.socket = socket;
 		
 

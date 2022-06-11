@@ -19,24 +19,44 @@ class WebsocketManager extends events.EventEmitter {
 
         this.server.on("connection", socket => {
             const connection = new WebsocketConnection(this.app, socket);
+            connection.on("identifyWindow", id => {
+                connection.window = this.windows[id];
+            })
 
+            connection.on("rawEvent", (op, data) => {
+                this.emit(op, connection, data);
+            })
+
+            this.connections.push(connection);
         })
     }
 
     async createWindow(url, opt) {
+        const id = uuid.v4();
         if (!electron.app.isReady()) {
             await electron.app.whenReady();
         }
 
-        const id = uuid.v4();
-
         const window = new electron.BrowserWindow(opt);
         window.loadURL(`${url}?id=${id}`);
         window.setMenu(null);
-        window.webContents.openDevTools({ mode: "undocked" });
 
+        this.windows[id] = window;
         return window;
     }
+
+    dispatch(packet) {
+        for (let connection of this.connections) {
+            connection.send(packet);
+        }
+    }
+
+    dispatchBulk(packets) {
+        for (let connection of this.connections) {
+            connection.sendBulk(packets);
+        }
+    }
 }
+
 
 module.exports = WebsocketManager;

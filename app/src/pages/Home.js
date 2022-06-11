@@ -69,11 +69,14 @@ class Home extends React.Component {
                                                                 }
                                                             }
     
-                                                            window.socket.send(JSON.stringify({
-                                                                op: "setTheme",
-                                                                data: val.data
-                                                            }))
-                                                            this.setState({ themes, current: val.path, loading: true });                                                 
+                                                            if (val.enabled) {
+                                                                window.socket.send(JSON.stringify({
+                                                                    op: "setTheme",
+                                                                    data: val.data
+                                                                }))
+                                                                this.setState({ current: val.path, loading: true });   
+                                                            }                         
+                                                            this.setState({ themes });       
                                                         }
                                                     }
                                                 }

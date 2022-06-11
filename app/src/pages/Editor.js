@@ -11,6 +11,20 @@ import { Button } from 'rsuite';
 
 import "./Editor.css";
 
+function hexToRgb(hex) {
+    const num = parseInt(hex.slice(1), 16);
+
+    return {
+        red: ((num >> 16) & 255) / 255,
+        green: ((num >> 8) & 255) / 255,
+        blue: (num & 255) / 255
+    }
+} 
+
+function rgbToHex(d) {
+    return "#" + [d.red, d.green, d.blue].map(a => (a * 255).toString(16).padStart(2, '0')).join('').toUpperCase();
+}
+
 class Editor extends React.Component {
     constructor(props) {
         super(props);
@@ -29,12 +43,12 @@ class Editor extends React.Component {
 
         window.manager.on("filesystem", data => this.setState({data}));
         window.manager.on("readfile", data => {
-            window.model.setValue(data.script);
+            window.model.setValue(data.content);
             this.modelPath = data.path;
 
             this.setState({
                 activeFile: data.path,
-                activeStart: data.script,
+                activeStart: data.content,
                 loading: false
             })
         })
@@ -57,6 +71,44 @@ class Editor extends React.Component {
                 rules: [],
                 colors: {
                     'editor.background': '#141519'
+                }
+            })
+            
+            monaco.languages.registerColorProvider("json", {
+                provideColorPresentations: (model, colorInfo, token) => {
+                    return [
+                        {
+                            label: rgbToHex(colorInfo.color)
+                        }
+                    ]
+                },
+
+                provideDocumentColors: (model, token) => {
+                    const tokens = [];
+
+                    const text = model.getValue();
+                    const lines = text.split("\n");
+
+                    for (let lineNumber in lines) {
+                        const line = lines[lineNumber];
+                        let index = -1;
+
+                        while ((index = line.indexOf("\"#", index + 1)) >= 0) {
+                            const color = line.substring(index + 1, index + 8);
+
+                            tokens.push({
+                                color: hexToRgb(color),
+                                range: {
+                                    startLineNumber: parseInt(lineNumber) + 1,
+                                    startColumn: index + 2,
+                                    endLineNumber: parseInt(lineNumber) + 1,
+                                    endColumn: index + 9
+                                }
+                            })
+                        }
+                    }
+
+                    return tokens
                 }
             })
 
@@ -85,7 +137,8 @@ class Editor extends React.Component {
                 inlayHints: { enabled: true },
                 inlineSuggest: { enabled: true },
                 renderValidationDecorations: 'on',
-                model: window.model
+                model: window.model,
+                colorDecorators: true
             })
 
             window.model.onDidChangeContent(() => {
@@ -116,7 +169,7 @@ class Editor extends React.Component {
 		window.socket.send(JSON.stringify({
             op: 'savefile', 
             data: {
-			    script: window.model.getValue(),
+			    content: window.model.getValue(),
 			    path: this.modelPath
             }
 		}))
