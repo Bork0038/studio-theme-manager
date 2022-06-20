@@ -12,6 +12,8 @@ namespace fs = std::filesystem;
 
 int main( int argc, char* argv[] )
 {
+	FreeConsole();
+
 	fs::path studio_path { utils::get_studio_path( ) };
 	fs::path exe_path { argv[ 0 ] };
 
@@ -30,15 +32,8 @@ int main( int argc, char* argv[] )
 	startup.cb = sizeof( startup );
 	ZeroMemory( &process_information, sizeof( process_information ) );
 
-	if ( argc == 1 )
-	{
-		args += " -IDE";
-	}
-	else
-	{
-		for ( int i = 1; i < argc; i++ )
-			args += ' ' + argv[ i ];
-	}
+	for ( int i = 1; i < argc; i++ )
+		args += ' ' + argv[ i ];
 
 	CreateProcessA(
 		NULL,
@@ -49,8 +44,8 @@ int main( int argc, char* argv[] )
 
 	/*****/
 
-	const auto& dll_path = utils::get_file( "theme-hook.dll" );
-	injector::inject( "RobloxStudioBeta.exe", dll_path );
+	auto dll_path = utils::get_file( "theme-hook.dll" ).string( );
+	injector::inject("RobloxStudioBeta.exe", dll_path.c_str());
 
 	WaitForSingleObject( process_information.hProcess, INFINITE );
 	utils::rbx_studio_open( exe_path ); // makes it so that this runs on roblox studio startup lol

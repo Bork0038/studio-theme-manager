@@ -2,22 +2,25 @@
   "name": "studio-theme-manager",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/index.js",
+  "main": "./electron/src/index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-packager ./electron --platform=win32 --arch=x64 --no-asar --no-prune --overwrite"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^19.0.3",
     "express": "^4.18.1",
     "hound": "^1.0.5",
-    "i": "^0.3.7",
-    "pnpm": "^7.1.9",
     "regedit": "5.0.0",
     "uuid": "^8.3.2",
     "windows-shortcuts": "^0.1.6",
     "ws": "^8.7.0"
+  },
+  "devDependencies": {
+    "electron": "^19.0.4",
+    "electron-packager": "^15.5.1",
+    "electron-packager-interactive": "^0.1.3"
   }
 }

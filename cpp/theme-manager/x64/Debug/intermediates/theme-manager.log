@@ -1,0 +1,6 @@
+﻿  injector.cpp
+  main.cpp
+  utils.cpp
+C:\cpp\studio-project\studio-theme-manager\theme-manager\src\utils.cpp(50,117): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
+  Generating Code...
+  theme-manager.vcxproj -> C:\cpp\studio-project\studio-theme-manager\Debug\x64\theme-manager.exe
