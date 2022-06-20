@@ -17,6 +17,7 @@
     "electron-renderer": "^2.0.4",
     "events": "^3.3.0",
     "history": "^5.3.0",
+    "html-webpack-plugin": "^5.5.0",
     "lodash": "^4.17.21",
     "monaco-editor-webpack-plugin": "^7.0.1",
     "monaco-languageclient": "^0.18.1",

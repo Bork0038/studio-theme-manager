@@ -10,6 +10,11 @@ const ws       = require('ws');
 const fs       = require('fs');
 
 const webserver = express();
+webserver.use(express.static(path.join(__dirname, "dist")));
+webserver.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "dist/index.html"));
+})
+webserver.listen(8080);
 
 const workspacePath = path.join(__dirname, '../themes');
 
@@ -115,4 +120,5 @@ websocketManager.createWindow("http://localhost:8080/", {
     frame: false,
     minHeight: 450,
     minWidth: 650,
+    webPreferences: { nodeIntegration: false }
 })

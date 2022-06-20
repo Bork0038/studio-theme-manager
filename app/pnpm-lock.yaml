@@ -29,6 +29,7 @@ specifiers:
   events: ^3.3.0
   file-loader: ^6.2.0
   history: ^5.3.0
+  html-webpack-plugin: ^5.5.0
   lodash: ^4.17.21
   mini-css-extract-plugin: ^2.6.0
   monaco-editor-webpack-plugin: ^7.0.1
@@ -65,6 +66,7 @@ dependencies:
   electron-renderer: 2.0.4
   events: 3.3.0
   history: 5.3.0
+  html-webpack-plugin: 5.5.0_webpack@5.73.0
   lodash: 4.17.21
   monaco-editor-webpack-plugin: 7.0.1_webpack@5.73.0
   monaco-languageclient: 0.18.1
@@ -5653,7 +5655,7 @@ packages:
       he: 1.2.0
       param-case: 3.0.4
       relateurl: 0.2.7
-      terser: 5.14.0
+      terser: 5.14.1
     dev: false
 
   /html-webpack-plugin/5.5.0_webpack@5.73.0:
@@ -8801,7 +8803,7 @@ packages:
       jsesc: 0.5.0
 
   /relateurl/0.2.7:
-    resolution: {integrity: sha1-VNvzd+UUQKypCkzSdGANP/LYiKk=}
+    resolution: {integrity: sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==}
     engines: {node: '>= 0.10'}
     dev: false
 
@@ -9714,6 +9716,17 @@ packages:
       acorn: 8.7.1
       commander: 2.20.3
       source-map-support: 0.5.21
+
+  /terser/5.14.1:
+    resolution: {integrity: sha512-+ahUAE+iheqBTDxXhTisdA8hgvbEG1hHOQ9xmNjeUJSoi6DU/gMrKNcfZjHkyY6Alnuyc+ikYJaxxfHkT3+WuQ==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      '@jridgewell/source-map': 0.3.2
+      acorn: 8.7.1
+      commander: 2.20.3
+      source-map-support: 0.5.21
+    dev: false
 
   /test-exclude/6.0.0:
     resolution: {integrity: sha512-cAGWPIyOHU6zlmg88jwm7VRyXnMN7iV68OGAbYDk/Mh/xC/pzVPlQtY6ngoIH/5/tciuhGfvESU8GrHrcxD56w==}
