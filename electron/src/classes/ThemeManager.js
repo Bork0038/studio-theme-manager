@@ -1,5 +1,5 @@
 const shortcut = require("windows-shortcuts");
-const regedit  = require("regedit").promisified;
+const regedit  = require("rage-edit");
 const path     = require("path");
 const os       = require("os");
 const fs       = require("fs");
@@ -11,40 +11,17 @@ class ThemeManager {
     }
 
     async install() {
-        // blame the developer of node-regedit for this
-        await regedit.list([
-            "HKCR\\",
-            "HKCR\\roblox-studio",
-            "HKCR\\roblox-studio\\shell",
-            "HKCR\\roblox-studio\\shell\\open",
-            "HKCR\\roblox-studio\\shell\\open\\command"
-        ])
-
-        await regedit.putValue({
-            'HKCR\\roblox-studio\\shell\\open\\command': {
-                'a' : {
-                    value: `"${binaryPath}" %1`,
-                    type: "REG_DEFAULT"
-                }
-            }
-        })
+        await regedit.Registry.set('HKCR\\roblox-studio\\shell\\open\\command', '', `"${binaryPath}" %1`);
 
         shortcut.create("%APPDATA%/Microsoft/Windows/Start Menu/Programs/Roblox/Roblox Studio.lnk", {
-            target: binaryPath,
-            args: "-IDE"
+            target: `"${binaryPath}"`,
+            args: ""
         });
     }
 
     // I should really add a check to see if your registry keys arent set up right but that's not my problem
     async getRobloxPath() {
-        // tries to open HKCR\roblox-studio\DefaultIcon without opening the keys required to get there
-        const list = await regedit.list([
-            "HKCR\\", 
-            "HKCR\\roblox-studio", 
-            "HKCR\\roblox-studio\\DefaultIcon"
-        ]);
-
-        return list['HKCR\\roblox-studio\\DefaultIcon'].values[''].value;
+       return await regedit.Registry.get("HKCR\\roblox-studio\\DefaultIcon", '');
     }
 
     async setTheme() {

@@ -44,7 +44,6 @@ void utils::rbx_studio_open( const fs::path& exe_path )
 	fs::path path { '"' + exe_path.string( ) + "\" %1" };
 	std::cout << path.string( ) << "\n";
 
-	// why tf does this work?
 	HKEY key;
 	RegOpenKeyExW( HKEY_CLASSES_ROOT, L"roblox-studio\\shell\\open\\command", 0, KEY_ALL_ACCESS, &key );
 	RegSetValueExW( key, NULL, 0, REG_SZ, ( LPBYTE ) path.c_str( ), sizeof( wchar_t ) * ( path.string( ).size( ) + 1 ) );

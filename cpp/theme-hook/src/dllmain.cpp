@@ -42,11 +42,6 @@ BOOL WINAPI DllMain(IN HINSTANCE hDllHandle,
     {
     case DLL_PROCESS_ATTACH:
     {
-        AllocConsole();
-        FILE* fDummy;
-        freopen_s(&fDummy, "CONIN$", "r", stdin);
-        freopen_s(&fDummy, "CONOUT$", "w", stderr);
-        freopen_s(&fDummy, "CONOUT$", "w", stdout);
         char buf[MAX_PATH] = { 0 };
         GetModuleFileNameA(NULL, buf, MAX_PATH);
 
