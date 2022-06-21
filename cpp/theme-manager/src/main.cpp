@@ -35,6 +35,11 @@ int main( int argc, char* argv[] )
 	for ( int i = 1; i < argc; i++ )
 		args += ' ' + argv[ i ];
 
+	if (argc == 1) {
+		args += " - IDE";
+	}
+
+	Sleep(1000);
 	CreateProcessA(
 		NULL,
 		( LPSTR ) args.c_str( ),
@@ -48,5 +53,6 @@ int main( int argc, char* argv[] )
 	injector::inject("RobloxStudioBeta.exe", dll_path.c_str());
 
 	WaitForSingleObject( process_information.hProcess, INFINITE );
+	Sleep(1000);
 	utils::rbx_studio_open( exe_path ); // makes it so that this runs on roblox studio startup lol
 }

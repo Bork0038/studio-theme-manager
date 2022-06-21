@@ -32,6 +32,7 @@ fs::path utils::get_studio_path( )
 	DWORD type = REG_SZ;
 
 	RegQueryValueExA( key, NULL, NULL, &type, ( LPBYTE ) path, &size );
+	RegCloseKey(key);
 	return fs::path { path };
 }
 
@@ -47,4 +48,5 @@ void utils::rbx_studio_open( const fs::path& exe_path )
 	HKEY key;
 	RegOpenKeyExW( HKEY_CLASSES_ROOT, L"roblox-studio\\shell\\open\\command", 0, KEY_ALL_ACCESS, &key );
 	RegSetValueExW( key, NULL, 0, REG_SZ, ( LPBYTE ) path.c_str( ), sizeof( wchar_t ) * ( path.string( ).size( ) + 1 ) );
+	RegCloseKey(key);
 }
